@@ -1,0 +1,6 @@
+venv
+
+
+# secrets
+.env
+.env.*

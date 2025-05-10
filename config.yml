@@ -1,0 +1,22 @@
+paths:
+  raw_pdf_dir: "data/raw/pdf" # Исходные PDF
+  interim_txt_dir: "data/interim/txt" # Куда сохранять .txt
+  processed_corpus: "data/processed/corpus"
+
+processing:
+  regex_patterns:
+    whitespace: '\s+' # Регулярки для очистки текста
+    formula: '\$.*?\$'
+    latex_commands: '\\\w+{.*?}'
+  replacements:
+    formula: "[FORMULA]"
+
+experiment:
+  depth_values: [1, 2, 3, 4, 5] # Значения d для тестов
+  metrics: ["f1", "precision", "recall"]
+
+llm:
+  model: "gpt-4.1-mini"
+  temperature: 0.5
+  max_tokens: 10000
+  system_prompt: "Извлеки специализированные термины и концепции из текста лекций. Возвращай только JSON-список."

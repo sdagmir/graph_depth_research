@@ -1,0 +1,109 @@
+{
+  "1": [
+    "Redux", "React", "Flux", "ReduxToolkit", "Hooks",
+    "MobX", "useContext", "useReducer", "Slice",
+    "Reducer", "Action", "InitialState", "Store",
+    "useSelector", "useDispatch", "axios", "API"
+  ],
+  "2": [
+    "Адаптивность", "Flexbox", "React", "GitHubPages",
+    "Vite", "gh-pages", "VKMiniApp", "WebView", "iframe",
+    "PWA", "ServiceWorker", "Electron", "Tauri", "Rust",
+    "Node.js", "KotlinMultiplatform", "Flutter",
+    "ReactNative", "Qt", "Dioxus"
+  ],
+  "3": [
+    "AJAX", "JSON-RPC", "Axios", "fetch", "middleware",
+    "ReduxToolkit", "ReduxThunk", "Swagger", "SwaggerUI",
+    "RESTfulAPI", "swagger-typescript-api",
+    "LocalStorage", "JWT", "BPMN2.0"
+  ],
+  "4": [
+    "ЗаявкаЧерновик", "СписокУслуг", "Корзина", "DMZ", "Firewall",
+    "setStatus", "getRandomStatus", "Microservices", "WebSocket",
+    "LongPolling", "ShortPolling", "EventSource", "Polling",
+    "Broker", "Redis", "ApacheKafka", "RabbitMQ", "gRPC", "ProtocolBuffers"
+  ],
+  "5": [
+    "МобильныеПриложения", "ObjectiveC", "Swift", "Java", "Kotlin",
+    "AndroidStudio", "Xcode", "API", "ReactNative", "Axios",
+    "ReduxToolkit", "MVVM", "MVC", "UIKit", "UITableView",
+    "Model", "View", "ViewModel", "RESTClient", "Retrofit"
+  ],
+  "6": [
+    "React", "Redux", "ReactBootstrap", "Django", "Go", "PostgreSQL",
+    "GitHub", "VSCode", "Ubuntu", "Docker", "IETF", "RFC", "URL",
+    "HTTP", "FTP", "HTML", "SGML", "URI", "CGI", "Flask", "Spring",
+    "PHP", "Ruby", "CSharp", "WSGI", "ASGI", "Middleware", "Minio"
+  ],
+  "7": [
+    "PostgreSQL", "Jupyter", "DocumentOriented", "Relational", "InMemory",
+    "Graph", "KeyValue", "ERDiagram", "StarUML", "Date", "Integer", "Float",
+    "String", "CLOB", "BLOB", "XML", "SQL", "DDL", "DML", "DCL", "TCL",
+    "COMMIT", "ROLLBACK", "SAVEPOINT", "CAPTheorem", "Adminer", "DjangoAdmin",
+    "DataGrip", "Migrations", "Goose", "DjangoORM", "GORM", "ThreeTierArchitecture",
+    "MVC", "CleanArchitecture", "Cursor", "ORM", "QuerySet", "UseCase", "Entity"
+  ],
+  "8": [
+    "SystemDesign", "UML", "Documentation", "Customer", "ProjectDirector",
+    "ProjectManager", "UIUXDesigner", "Analyst", "Developer", "QA", "DevOpsSRE",
+    "Project", "Product", "Process", "MVP", "UserStory", "Epic", "Roadmap",
+    "Kanban", "Agile", "Scrum", "ScrumMaster", "ProductOwner", "DevOps",
+    "CI_CD", "InfrastructureAsCode", "GitFlow", "develop", "featureBranch",
+    "releaseBranch", "hotfixBranch", "ClassDiagram", "SequenceDiagram",
+    "DeploymentDiagram", "UseCaseDiagram", "ActivityDiagram", "StateDiagram",
+    "BPMN"
+  ],
+  "9": [
+    "OSIModel", "TCPIPModel", "IETF", "RFC", "RealTimeWeb", "Ajax", "Push",
+    "WebSocket", "LongPolling", "WWW", "HTML", "URI", "CGI", "HTTP", "HTTPS",
+    "HTTP0_9", "HTTP1_0", "HTTP1_1", "HTTP2", "HTTP3", "QUIC", "FTP", "Mailto",
+    "XMLRPC", "SOAP", "WebDAV", "JSONRPC", "gRPC", "GET", "POST", "PUT",
+    "PATCH", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT", "StatusCode"
+  ],
+  "10": [
+    "ThreeTierArchitecture", "WebService", "WebAPI", "JSON", "SOAP",
+    "XMLRPC", "JSONRPC", "gRPC", "ProtocolBuffers", "AJAX",
+    "XMLHttpRequest", "XHR", "SPA", "DjangoRestFramework",
+    "makemigrations", "migrate", "Serializer", "APIView", "ViewSet",
+    "Postman", "Insomnia", "Swagger", "OpenAPI", "SOA",
+    "ServiceOrientedArchitecture", "MicroserviceArchitecture",
+    "S3", "Ceph", "Minio", "Heroku", "AWS"
+  ],
+  "11": [
+    "Authentication", "Identification", "Authorization", "JWT",
+    "JSONWebToken", "Session", "SetCookie", "Cookie", "User",
+    "DRFAuthentication", "authenticationClasses", "permissionClasses",
+    "Postman", "WSL", "Redis", "RemoteDictionaryServer",
+    "HSET", "HGET", "Django", "drf-yasg", "Swagger", "OpenAPI"
+  ],
+  "12": [
+    "SequenceDiagram", "SwaggerGo", "SwaggerEditor", "Authentication",
+    "Identification", "Authorization", "JWT", "JSONWebToken",
+    "DigitalSignature", "Blockchain", "RSA", "ShorAlgorithm",
+    "DeutschAlgorithm", "ManyWorldsInterpretation", "TuringMachine",
+    "NPHardProblems", "QuantumComputer", "AccessToken", "RefreshToken",
+    "SingleSignOn", "SSO", "OAuth", "TwoFactorAuthentication"
+  ],
+  "13": [
+    "Teleportation", "ThreeTierArchitecture", "AJAX", "IP", "ReverseProxy",
+    "WebFrameworks", "Frontend", "JS", "TS", "React", "VirtualDOM",
+    "Documentation", "DOM", "FunctionalComponents", "ClassComponents",
+    "Props", "State", "DataFlow", "LifecycleMethods", "GetDerivedStateFromProps",
+    "Render", "ComponentDidMount", "ComponentDidUpdate", "ComponentWillUnmount",
+    "UseEffect", "Hooks", "Vite", "PackageJson", "PackageLockJson",
+    "ViteConfigTs", "TsconfigJson", "TsconfigNodeJson", "EslintrcCjs",
+    "IndexHtml", "MainTsx", "AppTsx", "ES6", "Babel", "Webpack",
+    "CreateReactApp", "JSX", "TSX", "CamelCase", "ClassName", "TabIndex",
+    "ReactBootstrap", "MUI", "FigmaMUI", "CORS", "Proxy"
+  ],
+  "14": [
+    "PhotoPointApp", "CampusMap", "MapViewApp", "DataFlow", "LifecycleMethods",
+    "FunctionalComponents", "Hooks", "UseContext", "UseReducer", "UseMemo",
+    "ReactRouterHooks", "UseLocation", "UseNavigate", "UseParams", "Breadcrumbs",
+    "Search", "Mock", "CORS", "ReverseProxy", "BFF", "GraphQL",
+    "Microfrontends", "NextJs", "SSG", "ServerComponents", "FeatureSlicedDesign",
+    "FSD", "Shared", "Entities", "Features", "Widgets", "Pages", "Processes",
+    "App", "Slices", "Segments", "UI", "Model", "API", "Lib", "Utils"
+  ]
+}

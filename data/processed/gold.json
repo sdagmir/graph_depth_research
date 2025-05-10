@@ -1,0 +1,1093 @@
+{
+  "Redux": [
+    1,
+    6
+  ],
+  "React": [
+    1,
+    2,
+    6,
+    13
+  ],
+  "Flux": [
+    1
+  ],
+  "ReduxToolkit": [
+    1,
+    3,
+    5
+  ],
+  "Hooks": [
+    1,
+    13,
+    14
+  ],
+  "MobX": [
+    1
+  ],
+  "useContext": [
+    1
+  ],
+  "useReducer": [
+    1
+  ],
+  "Slice": [
+    1
+  ],
+  "Reducer": [
+    1
+  ],
+  "Action": [
+    1
+  ],
+  "InitialState": [
+    1
+  ],
+  "Store": [
+    1
+  ],
+  "useSelector": [
+    1
+  ],
+  "useDispatch": [
+    1
+  ],
+  "axios": [
+    1
+  ],
+  "API": [
+    1,
+    5,
+    14
+  ],
+  "Адаптивность": [
+    2
+  ],
+  "Flexbox": [
+    2
+  ],
+  "GitHubPages": [
+    2
+  ],
+  "Vite": [
+    2,
+    13
+  ],
+  "gh-pages": [
+    2
+  ],
+  "VKMiniApp": [
+    2
+  ],
+  "WebView": [
+    2
+  ],
+  "iframe": [
+    2
+  ],
+  "PWA": [
+    2
+  ],
+  "ServiceWorker": [
+    2
+  ],
+  "Electron": [
+    2
+  ],
+  "Tauri": [
+    2
+  ],
+  "Rust": [
+    2
+  ],
+  "Node.js": [
+    2
+  ],
+  "KotlinMultiplatform": [
+    2
+  ],
+  "Flutter": [
+    2
+  ],
+  "ReactNative": [
+    2,
+    5
+  ],
+  "Qt": [
+    2
+  ],
+  "Dioxus": [
+    2
+  ],
+  "AJAX": [
+    3,
+    10,
+    13
+  ],
+  "JSON-RPC": [
+    3
+  ],
+  "Axios": [
+    3,
+    5
+  ],
+  "fetch": [
+    3
+  ],
+  "middleware": [
+    3
+  ],
+  "ReduxThunk": [
+    3
+  ],
+  "Swagger": [
+    3,
+    10,
+    11
+  ],
+  "SwaggerUI": [
+    3
+  ],
+  "RESTfulAPI": [
+    3
+  ],
+  "swagger-typescript-api": [
+    3
+  ],
+  "LocalStorage": [
+    3
+  ],
+  "JWT": [
+    3,
+    11,
+    12
+  ],
+  "BPMN2.0": [
+    3
+  ],
+  "ЗаявкаЧерновик": [
+    4
+  ],
+  "СписокУслуг": [
+    4
+  ],
+  "Корзина": [
+    4
+  ],
+  "DMZ": [
+    4
+  ],
+  "Firewall": [
+    4
+  ],
+  "setStatus": [
+    4
+  ],
+  "getRandomStatus": [
+    4
+  ],
+  "Microservices": [
+    4
+  ],
+  "WebSocket": [
+    4,
+    9
+  ],
+  "LongPolling": [
+    4,
+    9
+  ],
+  "ShortPolling": [
+    4
+  ],
+  "EventSource": [
+    4
+  ],
+  "Polling": [
+    4
+  ],
+  "Broker": [
+    4
+  ],
+  "Redis": [
+    4,
+    11
+  ],
+  "ApacheKafka": [
+    4
+  ],
+  "RabbitMQ": [
+    4
+  ],
+  "gRPC": [
+    4,
+    9,
+    10
+  ],
+  "ProtocolBuffers": [
+    4,
+    10
+  ],
+  "МобильныеПриложения": [
+    5
+  ],
+  "ObjectiveC": [
+    5
+  ],
+  "Swift": [
+    5
+  ],
+  "Java": [
+    5
+  ],
+  "Kotlin": [
+    5
+  ],
+  "AndroidStudio": [
+    5
+  ],
+  "Xcode": [
+    5
+  ],
+  "MVVM": [
+    5
+  ],
+  "MVC": [
+    5,
+    7
+  ],
+  "UIKit": [
+    5
+  ],
+  "UITableView": [
+    5
+  ],
+  "Model": [
+    5,
+    14
+  ],
+  "View": [
+    5
+  ],
+  "ViewModel": [
+    5
+  ],
+  "RESTClient": [
+    5
+  ],
+  "Retrofit": [
+    5
+  ],
+  "ReactBootstrap": [
+    6,
+    13
+  ],
+  "Django": [
+    6,
+    11
+  ],
+  "Go": [
+    6
+  ],
+  "PostgreSQL": [
+    6,
+    7
+  ],
+  "GitHub": [
+    6
+  ],
+  "VSCode": [
+    6
+  ],
+  "Ubuntu": [
+    6
+  ],
+  "Docker": [
+    6
+  ],
+  "IETF": [
+    6,
+    9
+  ],
+  "RFC": [
+    6,
+    9
+  ],
+  "URL": [
+    6
+  ],
+  "HTTP": [
+    6,
+    9
+  ],
+  "FTP": [
+    6,
+    9
+  ],
+  "HTML": [
+    6,
+    9
+  ],
+  "SGML": [
+    6
+  ],
+  "URI": [
+    6,
+    9
+  ],
+  "CGI": [
+    6,
+    9
+  ],
+  "Flask": [
+    6
+  ],
+  "Spring": [
+    6
+  ],
+  "PHP": [
+    6
+  ],
+  "Ruby": [
+    6
+  ],
+  "CSharp": [
+    6
+  ],
+  "WSGI": [
+    6
+  ],
+  "ASGI": [
+    6
+  ],
+  "Middleware": [
+    6
+  ],
+  "Minio": [
+    6,
+    10
+  ],
+  "Jupyter": [
+    7
+  ],
+  "DocumentOriented": [
+    7
+  ],
+  "Relational": [
+    7
+  ],
+  "InMemory": [
+    7
+  ],
+  "Graph": [
+    7
+  ],
+  "KeyValue": [
+    7
+  ],
+  "ERDiagram": [
+    7
+  ],
+  "StarUML": [
+    7
+  ],
+  "Date": [
+    7
+  ],
+  "Integer": [
+    7
+  ],
+  "Float": [
+    7
+  ],
+  "String": [
+    7
+  ],
+  "CLOB": [
+    7
+  ],
+  "BLOB": [
+    7
+  ],
+  "XML": [
+    7
+  ],
+  "SQL": [
+    7
+  ],
+  "DDL": [
+    7
+  ],
+  "DML": [
+    7
+  ],
+  "DCL": [
+    7
+  ],
+  "TCL": [
+    7
+  ],
+  "COMMIT": [
+    7
+  ],
+  "ROLLBACK": [
+    7
+  ],
+  "SAVEPOINT": [
+    7
+  ],
+  "CAPTheorem": [
+    7
+  ],
+  "Adminer": [
+    7
+  ],
+  "DjangoAdmin": [
+    7
+  ],
+  "DataGrip": [
+    7
+  ],
+  "Migrations": [
+    7
+  ],
+  "Goose": [
+    7
+  ],
+  "DjangoORM": [
+    7
+  ],
+  "GORM": [
+    7
+  ],
+  "ThreeTierArchitecture": [
+    7,
+    10,
+    13
+  ],
+  "CleanArchitecture": [
+    7
+  ],
+  "Cursor": [
+    7
+  ],
+  "ORM": [
+    7
+  ],
+  "QuerySet": [
+    7
+  ],
+  "UseCase": [
+    7
+  ],
+  "Entity": [
+    7
+  ],
+  "SystemDesign": [
+    8
+  ],
+  "UML": [
+    8
+  ],
+  "Documentation": [
+    8,
+    13
+  ],
+  "Customer": [
+    8
+  ],
+  "ProjectDirector": [
+    8
+  ],
+  "ProjectManager": [
+    8
+  ],
+  "UIUXDesigner": [
+    8
+  ],
+  "Analyst": [
+    8
+  ],
+  "Developer": [
+    8
+  ],
+  "QA": [
+    8
+  ],
+  "DevOpsSRE": [
+    8
+  ],
+  "Project": [
+    8
+  ],
+  "Product": [
+    8
+  ],
+  "Process": [
+    8
+  ],
+  "MVP": [
+    8
+  ],
+  "UserStory": [
+    8
+  ],
+  "Epic": [
+    8
+  ],
+  "Roadmap": [
+    8
+  ],
+  "Kanban": [
+    8
+  ],
+  "Agile": [
+    8
+  ],
+  "Scrum": [
+    8
+  ],
+  "ScrumMaster": [
+    8
+  ],
+  "ProductOwner": [
+    8
+  ],
+  "DevOps": [
+    8
+  ],
+  "CI_CD": [
+    8
+  ],
+  "InfrastructureAsCode": [
+    8
+  ],
+  "GitFlow": [
+    8
+  ],
+  "develop": [
+    8
+  ],
+  "featureBranch": [
+    8
+  ],
+  "releaseBranch": [
+    8
+  ],
+  "hotfixBranch": [
+    8
+  ],
+  "ClassDiagram": [
+    8
+  ],
+  "SequenceDiagram": [
+    8,
+    12
+  ],
+  "DeploymentDiagram": [
+    8
+  ],
+  "UseCaseDiagram": [
+    8
+  ],
+  "ActivityDiagram": [
+    8
+  ],
+  "StateDiagram": [
+    8
+  ],
+  "BPMN": [
+    8
+  ],
+  "OSIModel": [
+    9
+  ],
+  "TCPIPModel": [
+    9
+  ],
+  "RealTimeWeb": [
+    9
+  ],
+  "Ajax": [
+    9
+  ],
+  "Push": [
+    9
+  ],
+  "WWW": [
+    9
+  ],
+  "HTTPS": [
+    9
+  ],
+  "HTTP0_9": [
+    9
+  ],
+  "HTTP1_0": [
+    9
+  ],
+  "HTTP1_1": [
+    9
+  ],
+  "HTTP2": [
+    9
+  ],
+  "HTTP3": [
+    9
+  ],
+  "QUIC": [
+    9
+  ],
+  "Mailto": [
+    9
+  ],
+  "XMLRPC": [
+    9,
+    10
+  ],
+  "SOAP": [
+    9,
+    10
+  ],
+  "WebDAV": [
+    9
+  ],
+  "JSONRPC": [
+    9,
+    10
+  ],
+  "GET": [
+    9
+  ],
+  "POST": [
+    9
+  ],
+  "PUT": [
+    9
+  ],
+  "PATCH": [
+    9
+  ],
+  "DELETE": [
+    9
+  ],
+  "OPTIONS": [
+    9
+  ],
+  "HEAD": [
+    9
+  ],
+  "TRACE": [
+    9
+  ],
+  "CONNECT": [
+    9
+  ],
+  "StatusCode": [
+    9
+  ],
+  "WebService": [
+    10
+  ],
+  "WebAPI": [
+    10
+  ],
+  "JSON": [
+    10
+  ],
+  "XMLHttpRequest": [
+    10
+  ],
+  "XHR": [
+    10
+  ],
+  "SPA": [
+    10
+  ],
+  "DjangoRestFramework": [
+    10
+  ],
+  "makemigrations": [
+    10
+  ],
+  "migrate": [
+    10
+  ],
+  "Serializer": [
+    10
+  ],
+  "APIView": [
+    10
+  ],
+  "ViewSet": [
+    10
+  ],
+  "Postman": [
+    10,
+    11
+  ],
+  "Insomnia": [
+    10
+  ],
+  "OpenAPI": [
+    10,
+    11
+  ],
+  "SOA": [
+    10
+  ],
+  "ServiceOrientedArchitecture": [
+    10
+  ],
+  "MicroserviceArchitecture": [
+    10
+  ],
+  "S3": [
+    10
+  ],
+  "Ceph": [
+    10
+  ],
+  "Heroku": [
+    10
+  ],
+  "AWS": [
+    10
+  ],
+  "Authentication": [
+    11,
+    12
+  ],
+  "Identification": [
+    11,
+    12
+  ],
+  "Authorization": [
+    11,
+    12
+  ],
+  "JSONWebToken": [
+    11,
+    12
+  ],
+  "Session": [
+    11
+  ],
+  "SetCookie": [
+    11
+  ],
+  "Cookie": [
+    11
+  ],
+  "User": [
+    11
+  ],
+  "DRFAuthentication": [
+    11
+  ],
+  "authenticationClasses": [
+    11
+  ],
+  "permissionClasses": [
+    11
+  ],
+  "WSL": [
+    11
+  ],
+  "RemoteDictionaryServer": [
+    11
+  ],
+  "HSET": [
+    11
+  ],
+  "HGET": [
+    11
+  ],
+  "drf-yasg": [
+    11
+  ],
+  "SwaggerGo": [
+    12
+  ],
+  "SwaggerEditor": [
+    12
+  ],
+  "DigitalSignature": [
+    12
+  ],
+  "Blockchain": [
+    12
+  ],
+  "RSA": [
+    12
+  ],
+  "ShorAlgorithm": [
+    12
+  ],
+  "DeutschAlgorithm": [
+    12
+  ],
+  "ManyWorldsInterpretation": [
+    12
+  ],
+  "TuringMachine": [
+    12
+  ],
+  "NPHardProblems": [
+    12
+  ],
+  "QuantumComputer": [
+    12
+  ],
+  "AccessToken": [
+    12
+  ],
+  "RefreshToken": [
+    12
+  ],
+  "SingleSignOn": [
+    12
+  ],
+  "SSO": [
+    12
+  ],
+  "OAuth": [
+    12
+  ],
+  "TwoFactorAuthentication": [
+    12
+  ],
+  "Teleportation": [
+    13
+  ],
+  "IP": [
+    13
+  ],
+  "ReverseProxy": [
+    13,
+    14
+  ],
+  "WebFrameworks": [
+    13
+  ],
+  "Frontend": [
+    13
+  ],
+  "JS": [
+    13
+  ],
+  "TS": [
+    13
+  ],
+  "VirtualDOM": [
+    13
+  ],
+  "DOM": [
+    13
+  ],
+  "FunctionalComponents": [
+    13,
+    14
+  ],
+  "ClassComponents": [
+    13
+  ],
+  "Props": [
+    13
+  ],
+  "State": [
+    13
+  ],
+  "DataFlow": [
+    13,
+    14
+  ],
+  "LifecycleMethods": [
+    13,
+    14
+  ],
+  "GetDerivedStateFromProps": [
+    13
+  ],
+  "Render": [
+    13
+  ],
+  "ComponentDidMount": [
+    13
+  ],
+  "ComponentDidUpdate": [
+    13
+  ],
+  "ComponentWillUnmount": [
+    13
+  ],
+  "UseEffect": [
+    13
+  ],
+  "PackageJson": [
+    13
+  ],
+  "PackageLockJson": [
+    13
+  ],
+  "ViteConfigTs": [
+    13
+  ],
+  "TsconfigJson": [
+    13
+  ],
+  "TsconfigNodeJson": [
+    13
+  ],
+  "EslintrcCjs": [
+    13
+  ],
+  "IndexHtml": [
+    13
+  ],
+  "MainTsx": [
+    13
+  ],
+  "AppTsx": [
+    13
+  ],
+  "ES6": [
+    13
+  ],
+  "Babel": [
+    13
+  ],
+  "Webpack": [
+    13
+  ],
+  "CreateReactApp": [
+    13
+  ],
+  "JSX": [
+    13
+  ],
+  "TSX": [
+    13
+  ],
+  "CamelCase": [
+    13
+  ],
+  "ClassName": [
+    13
+  ],
+  "TabIndex": [
+    13
+  ],
+  "MUI": [
+    13
+  ],
+  "FigmaMUI": [
+    13
+  ],
+  "CORS": [
+    13,
+    14
+  ],
+  "Proxy": [
+    13
+  ],
+  "PhotoPointApp": [
+    14
+  ],
+  "CampusMap": [
+    14
+  ],
+  "MapViewApp": [
+    14
+  ],
+  "UseContext": [
+    14
+  ],
+  "UseReducer": [
+    14
+  ],
+  "UseMemo": [
+    14
+  ],
+  "ReactRouterHooks": [
+    14
+  ],
+  "UseLocation": [
+    14
+  ],
+  "UseNavigate": [
+    14
+  ],
+  "UseParams": [
+    14
+  ],
+  "Breadcrumbs": [
+    14
+  ],
+  "Search": [
+    14
+  ],
+  "Mock": [
+    14
+  ],
+  "BFF": [
+    14
+  ],
+  "GraphQL": [
+    14
+  ],
+  "Microfrontends": [
+    14
+  ],
+  "NextJs": [
+    14
+  ],
+  "SSG": [
+    14
+  ],
+  "ServerComponents": [
+    14
+  ],
+  "FeatureSlicedDesign": [
+    14
+  ],
+  "FSD": [
+    14
+  ],
+  "Shared": [
+    14
+  ],
+  "Entities": [
+    14
+  ],
+  "Features": [
+    14
+  ],
+  "Widgets": [
+    14
+  ],
+  "Pages": [
+    14
+  ],
+  "Processes": [
+    14
+  ],
+  "App": [
+    14
+  ],
+  "Slices": [
+    14
+  ],
+  "Segments": [
+    14
+  ],
+  "UI": [
+    14
+  ],
+  "Lib": [
+    14
+  ],
+  "Utils": [
+    14
+  ]
+}
