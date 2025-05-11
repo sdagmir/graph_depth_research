@@ -1,72 +1,95 @@
 # src/extract_pdf.py
 
-from pathlib import Path
+from __future__ import annotations
+
+import logging
 import re
-from tqdm import tqdm
+from pathlib import Path
+
 import pdfplumber
+from dotenv import load_dotenv
+from tqdm import tqdm
+
 from config import ConfigLoader
+
+# ----------------------------- ЛОГИРОВАНИЕ -------------------------------- #
+load_dotenv()
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
 
 class PDFExtractor:
+    """Читает PDF-файлы и сохраняет очищенный текст в interim_txt_dir."""
+
+    # --------------------------- ИНИЦИАЛИЗАЦИЯ ----------------------------- #
     def __init__(self, config: ConfigLoader):
         self.config = config
-        self._validate_paths()
+        self._check_dirs()
 
-    def _validate_paths(self):
-        """Проверяем существование необходимых директорий"""
-        if not self.config.paths["raw_pdf_dir"].exists():
+    # ---------------------- ПРОВЕРКА/СОЗДАНИЕ КАТАЛОГОВ -------------------- #
+    def _check_dirs(self) -> None:
+        """Убеждаемся, что исходная и целевая директории существуют."""
+        pdf_dir = self.config.paths["raw_pdf_dir"]
+        txt_dir = self.config.paths["interim_txt_dir"]
+
+        if not pdf_dir.exists():
             raise FileNotFoundError(
-                f"PDF directory not found: {self.config.paths['raw_pdf_dir']}")
+                f"Каталог PDF не найден: {pdf_dir.resolve()}")
 
-        self.config.paths["interim_txt_dir"].mkdir(parents=True, exist_ok=True)
+        txt_dir.mkdir(parents=True, exist_ok=True)
 
-    def _clean_text(self, text: str) -> str:
-        """Применяет все правила очистки из конфига"""
-        patterns = self.config["processing"]["regex_patterns"]
-        replacements = self.config["processing"]["replacements"]
+    # --------------------------- ОЧИСТКА ТЕКСТА ---------------------------- #
+    def _clean(self, text: str) -> str:
+        """Применяет регэкспы из config.yml к извлечённому тексту."""
+        rx = self.config["processing"]["regex_patterns"]
+        rep = self.config["processing"]["replacements"]
 
-        text = re.sub(patterns["whitespace"], ' ', text)
-        text = re.sub(patterns["formula"], replacements["formula"], text)
-        text = re.sub(patterns["latex_commands"], '', text)
+        text = re.sub(rx["whitespace"], " ", text)
+        text = re.sub(rx["formula"], rep["formula"], text)
+        text = re.sub(rx["latex_commands"], "", text)
         return text.strip()
 
-    def process_all(self):
-        """Основной пайплайн обработки"""
-        pdf_files = list(self.config.paths["raw_pdf_dir"].glob("*.pdf"))
-
-        if not pdf_files:
-            print(f"No PDF files found in {self.config.paths['raw_pdf_dir']}")
-            return
-
-        for idx, pdf_path in enumerate(tqdm(pdf_files, desc="Processing PDFs")):
-            doc_id = idx + 1
-            output_path = self.config.paths["interim_txt_dir"] / \
-                f"{doc_id}.txt"
-            self._process_single(pdf_path, output_path, doc_id)
-
-    def _process_single(self, pdf_path: Path, output_path: Path, doc_id: int):
-        """Обрабатывает один PDF-файл"""
-        text_content = [f"doc_id: {doc_id}"]
+    # ----------------------------- ОБРАБОТКА ------------------------------- #
+    def _process_pdf(self, pdf_path: Path, out_path: Path, doc_id: int) -> None:
+        """Читает один PDF и пишет очищенный текст в файл."""
+        lines = [f"doc_id: {doc_id}"]
 
         try:
             with pdfplumber.open(pdf_path) as pdf:
                 for page in pdf.pages:
-                    text = page.extract_text() or ""
-                    text = self._clean_text(text)
-                    if text:
-                        text_content.append(text)
+                    raw = page.extract_text() or ""
+                    cleaned = self._clean(raw)
+                    if cleaned:
+                        lines.append(cleaned)
 
-            output_path.write_text("\n".join(text_content), encoding="utf-8")
-            print(f"Success: {pdf_path.name} → {output_path}")
+            out_path.write_text("\n".join(lines), encoding="utf-8")
+            logger.info("Успешно: %s → %s", pdf_path.name, out_path.name)
+        except Exception as exc:
+            logger.error("Ошибка при обработке %s: %s", pdf_path.name, exc)
 
-        except Exception as e:
-            print(f"Error processing {pdf_path.name}: {str(e)}")
+    def run(self) -> None:
+        """Основной пайплайн: проходим по всем PDF в raw_pdf_dir."""
+        pdf_dir = self.config.paths["raw_pdf_dir"]
+        pdf_files = sorted(pdf_dir.glob("*.pdf"))
+
+        if not pdf_files:
+            logger.warning(
+                "В каталоге %s не найдено PDF-файлов.", pdf_dir.resolve())
+            return
+
+        for idx, pdf in enumerate(tqdm(pdf_files, desc="Обработка PDF")):
+            doc_id = idx + 1
+            out_path = self.config.paths["interim_txt_dir"] / f"{doc_id}.txt"
+            self._process_pdf(pdf, out_path, doc_id)
+
+        logger.info("Извлечение текста завершено.")
 
 
+# ----------------------------- ЗАПУСК -------------------------------------- #
 if __name__ == "__main__":
-
-    config_path = Path(__file__).parent.parent / "config.yml"
-    config = ConfigLoader(config_path)
-
-    extractor = PDFExtractor(config)
-    extractor.process_all()
+    cfg = ConfigLoader(Path(__file__).parent.parent / "config.yml")
+    PDFExtractor(cfg).run()

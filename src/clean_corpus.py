@@ -1,94 +1,100 @@
 # src/clean_corpus.py
 
+from __future__ import annotations
+
+import logging
 import re
 from pathlib import Path
-from tqdm import tqdm
 from typing import List
+
+from tqdm import tqdm
+
 from config import ConfigLoader
+
+# ---------------------------- ЛОГИРОВАНИЕ --------------------------------- #
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
 
 class CorpusCleaner:
-    def __init__(self, config: ConfigLoader):
+    """Читает файлы из interim_txt_dir, чистит по правилам и кладёт в processed_corpus."""
+
+    # ------------------------- ИНИЦИАЛИЗАЦИЯ ------------------------------- #
+    def __init__(self, config: ConfigLoader) -> None:
         self.config = config
         self._patterns = {
-            'page_numbers': r'Page \d+ of \d+',
-            'copyright': r'©.*?\d{4}',
-            'latex_commands': r'\\\w+(\{.*?\})+',
-            'block_formulas': r'\$\$.*?\$\$',
-            'inline_formulas': r'\$.*?\$',
-            'figures': r'Fig\.\s*\d+\.?\d*',
-            'tables': r'Table\s*\d+\.?\d*',
-            'hyphens': r'-\s+',
-            'page_footers': r'^\d+$'
+            "page_numbers": r"Page \d+ of \d+",
+            "copyright": r"©.*?\d{4}",
+            "latex_commands": r"\\\w+(\{.*?\})+",
+            "block_formulas": r"\$\$.*?\$\$",
+            "inline_formulas": r"\$.*?\$",
+            "figures": r"Fig\.\s*\d+\.?\d*",
+            "tables": r"Table\s*\d+\.?\d*",
+            "hyphens": r"-\s+",
+            "page_footers": r"^\d+$",
         }
         self._replacements = {
-            'formulas': '[FORMULA]',
-            'figures': '[FIGURE]',
-            'tables': '[TABLE]'
+            "formulas": "[FORMULA]",
+            "figures": "[FIGURE]",
+            "tables": "[TABLE]",
         }
 
-    def _clean_text(self, text: str) -> str:
-        """Применяет все правила очистки из конфига"""
-        text = re.sub(self._patterns['page_numbers'], '', text)
-        text = re.sub(self._patterns['copyright'], '', text)
-        text = re.sub(self._patterns['latex_commands'], '', text)
+    # -------------------------- ОЧИСТКА ТЕКСТА ----------------------------- #
+    def _clean_line(self, text: str) -> str:
+        t = text
+        t = re.sub(self._patterns["page_numbers"], "", t)
+        t = re.sub(self._patterns["copyright"], "", t)
+        t = re.sub(self._patterns["latex_commands"], "", t)
 
-        text = re.sub(self._patterns['block_formulas'],
-                      self._replacements['formulas'], text)
-        text = re.sub(self._patterns['inline_formulas'],
-                      self._replacements['formulas'], text)
-        text = re.sub(self._patterns['figures'],
-                      self._replacements['figures'], text)
-        text = re.sub(self._patterns['tables'],
-                      self._replacements['tables'], text)
+        t = re.sub(self._patterns["block_formulas"],
+                   self._replacements["formulas"], t)
+        t = re.sub(self._patterns["inline_formulas"],
+                   self._replacements["formulas"], t)
+        t = re.sub(self._patterns["figures"], self._replacements["figures"], t)
+        t = re.sub(self._patterns["tables"], self._replacements["tables"], t)
 
-        text = re.sub(self._patterns['hyphens'], '', text)
-        text = re.sub(r'\s+', ' ', text)
-        text = re.sub(self._patterns['page_footers'],
-                      '', text, flags=re.MULTILINE)
+        t = re.sub(self._patterns["hyphens"], "", t)
+        t = re.sub(r"\s+", " ", t)
+        t = re.sub(self._patterns["page_footers"], "", t, flags=re.MULTILINE)
+        return t.strip()
 
-        return text.strip()
-
-    def _process_file(self, input_path: Path) -> None:
-        """Обрабатывает один файл"""
+    # ----------------------- ОБРАБОТКА ОДНОГО ФАЙЛА ------------------------ #
+    def _process_file(self, src: Path, dst: Path) -> None:
         try:
-            content = input_path.read_text(encoding="utf-8")
-            lines = content.split('\n')
+            raw = src.read_text(encoding="utf-8")
+            header, *body = raw.split("\n")
+            cleaned_body: List[str] = [
+                self._clean_line(line) for line in body if line]
+            dst.write_text(
+                "\n".join([header] + cleaned_body), encoding="utf-8")
+        except Exception as exc:
+            logger.error("Ошибка при обработке %s: %s", src.name, exc)
 
-            header = lines[0]
-            cleaned = [self._clean_text(line) for line in lines[1:]]
+    # -------------------------- ОСНОВНОЙ PIPELINE -------------------------- #
+    def run(self) -> None:
+        src_dir = self.config.paths["interim_txt_dir"]
+        dst_dir = self.config.paths["processed_corpus"]
 
-            cleaned = [line for line in cleaned if line]
-
-            output_path = self.config.paths["processed_corpus"] / \
-                input_path.name
-            output_path.write_text(
-                '\n'.join([header] + cleaned), encoding="utf-8")
-
-        except Exception as e:
-            print(f"Error processing {input_path.name}: {str(e)}")
-
-    def run_cleanup(self):
-        """Основной пайплайн очистки"""
-        input_dir = self.config.paths["interim_txt_dir"]
-        output_dir = self.config.paths["processed_corpus"]
-
-        output_dir.mkdir(parents=True, exist_ok=True)
-
-        files = list(input_dir.glob("*.txt"))
+        dst_dir.mkdir(parents=True, exist_ok=True)
+        files = sorted(src_dir.glob("*.txt"))
 
         if not files:
-            print(f"No TXT files found in {input_dir}")
+            logger.warning("В каталоге %s нет *.txt файлов.",
+                           src_dir.resolve())
             return
 
-        for file_path in tqdm(files, desc="Cleaning corpus"):
-            self._process_file(file_path)
+        for fp in tqdm(files, desc="Очистка корпуса"):
+            self._process_file(fp, dst_dir / fp.name)
 
-        print(f"Cleaned {len(files)} files. Output in {output_dir}")
+        logger.info("Очистка завершена. Файлов обработано: %d. Результат: %s", len(
+            files), dst_dir.resolve())
 
 
+# ------------------------------ ЗАПУСК ------------------------------------- #
 if __name__ == "__main__":
-    config = ConfigLoader(Path(__file__).parent.parent / "config.yml")
-
-    cleaner = CorpusCleaner(config)
-    cleaner.run_cleanup()
+    cfg = ConfigLoader(Path(__file__).parent.parent / "config.yml")
+    CorpusCleaner(cfg).run()

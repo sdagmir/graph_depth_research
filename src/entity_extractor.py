@@ -1,7 +1,10 @@
 # src/entity_extractor.py
 
+from __future__ import annotations
+
 import asyncio
 import json
+import logging
 import re
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -13,13 +16,20 @@ from tqdm import tqdm
 from config import ConfigLoader
 from utils.llm import ask_openai
 
+# --------------------------- ЛОГИРОВАНИЕ ---------------------------------- #
 load_dotenv()
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
 
 class EntityExtractor:
-    """Извлечение специализированных терминов из текстовых лекций с помощью LLM."""
+    """Запрашивает LLM и формирует doc_entities.json."""
 
-    # ------------------- КОНСТАНТЫ -----------------------------------------
+    # ------------------------- КОНСТАНТЫ ----------------------------------- #
     MAX_CHUNK_SIZE = 8_000
     DUP_THRESHOLD = 0.85
     STOPWORDS = {
@@ -27,32 +37,34 @@ class EntityExtractor:
         "Приложение", "Данные", "Система", "Файл",
     }
 
-    # ------------------- ИНИЦИАЛИЗАЦИЯ -------------------------------------
-    def __init__(self, config: ConfigLoader):
+    # ----------------------- ИНИЦИАЛИЗАЦИЯ --------------------------------- #
+    def __init__(self, config: ConfigLoader) -> None:
         self.config = config
         self.corpus_dir = self.config.paths["processed_corpus"]
+
         project_root = Path(__file__).resolve().parent.parent
         self.output_path = (
             project_root / "data/processed/doc_entities.json").resolve()
+
         self.llm_params: Dict = self.config["llm"]
+        self._check_dirs()
 
-        self._validate_paths()
-
-    def _validate_paths(self):
+    # ----------------- ПРОВЕРКА НАЛИЧИЯ КОРПУСА ---------------------------- #
+    def _check_dirs(self) -> None:
         if not self.corpus_dir.exists():
             raise FileNotFoundError(
                 f"Каталог корпуса не найден: {self.corpus_dir}")
         self.output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # ------------------- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---------------------------
+    # --------------------- ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ -------------------------- #
     @staticmethod
-    def _to_camel_case(entity: str) -> str:
-        entity = re.sub(r"[^\w\s]", "", entity)
-        return "".join(w.capitalize() for w in entity.split())
+    def _to_camel_case(text: str) -> str:
+        text = re.sub(r"[^\w\s]", "", text)
+        return "".join(w.capitalize() for w in text.split())
 
-    def _deduplicate(self, entities: List[str]) -> List[str]:
+    def _deduplicate(self, ents: List[str]) -> List[str]:
         uniq: List[str] = []
-        for ent in entities:
+        for ent in ents:
             ent = ent.strip()
             if len(ent) <= 2 or ent in self.STOPWORDS:
                 continue
@@ -64,9 +76,9 @@ class EntityExtractor:
                 uniq.append(ent)
         return sorted(uniq)
 
-    # ------------------- LLM ЗАПРОС (асинхронный) --------------------------
-    async def _fetch_entities_async(self, text_chunk: str) -> List[str]:
-        """Асинхронный запрос к LLM через utils.llm.ask_openai."""
+    # --------------------- ЗАПРОС К LLM (АСИНХРОННО) ----------------------- #
+    async def _fetch_async(self, chunk: str) -> List[str]:
+        """Отправляет кусок текста в LLM и возвращает список сущностей."""
         messages = [
             {
                 "role": "system",
@@ -76,7 +88,7 @@ class EntityExtractor:
                     "Ответ верни СТРОГО JSON-массивом без комментариев.",
                 ),
             },
-            {"role": "user", "content": text_chunk},
+            {"role": "user", "content": chunk},
         ]
         try:
             raw = await ask_openai(
@@ -88,68 +100,65 @@ class EntityExtractor:
             match = re.search(r"\[.*\]", raw, flags=re.DOTALL)
             return json.loads(match.group()) if match else []
         except Exception as exc:
-            print(f"Ошибка LLM: {exc}")
+            logger.error("Ошибка LLM: %s", exc)
             return []
 
-    def _call_llm(self, text_chunk: str) -> List[str]:
-        """Синхронная обёртка для использования в обычном коде."""
-        return asyncio.run(self._fetch_entities_async(text_chunk))
+    def _call_llm(self, chunk: str) -> List[str]:
+        """Синхронная обёртка для удобного вызова в цикле."""
+        return asyncio.run(self._fetch_async(chunk))
 
-    # ------------------- ОБРАБОТКА ОДНОГО ФАЙЛА ----------------------------
-    def _process_file(self, file_path: Path) -> Optional[Dict[str, List[str]]]:
+    # ------------------ ОБРАБОТКА ОДНОГО ФАЙЛА ----------------------------- #
+    def _process_file(self, path: Path) -> Optional[Dict[str, List[str]]]:
         try:
-            content = file_path.read_text(encoding="utf-8")
+            content = path.read_text(encoding="utf-8")
             m = re.search(r"doc_id:\s*(\d+)", content)
             if not m:
-                print(
-                    f"В файле {file_path.name} отсутствует строка doc_id")
+                logger.warning("В файле %s отсутствует doc_id.", path.name)
                 return None
 
-            doc_id = m.group(1)
-            text_body = content.split("\n", 1)[1]
+            doc_id: str = m.group(1)
+            body = content.split("\n", 1)[1]
 
-            chunks = [
-                text_body[i: i + self.MAX_CHUNK_SIZE]
-                for i in range(0, len(text_body), self.MAX_CHUNK_SIZE)
-            ]
+            chunks = [body[i: i + self.MAX_CHUNK_SIZE]
+                      for i in range(0, len(body), self.MAX_CHUNK_SIZE)]
 
-            raw_entities: List[str] = []
+            raw: List[str] = []
             for chunk in chunks:
-                raw_entities.extend(self._call_llm(chunk))
+                raw.extend(self._call_llm(chunk))
 
-            cleaned = self._deduplicate(
-                [self._to_camel_case(e) for e in raw_entities])
-            return {doc_id: cleaned}
+            cleaned = self._deduplicate([self._to_camel_case(e) for e in raw])
+            return {doc_id: cleaned} if cleaned else None
 
         except Exception as exc:
-            print(f"Ошибка при обработке {file_path.name}: {exc}")
+            logger.error("Ошибка при обработке %s: %s", path.name, exc)
             return None
 
-    # ------------------- ОСНОВНОЙ ПАЙПЛАЙН ---------------------------------
-    def run_pipeline(self):
-        files = sorted(self.corpus_dir.glob("*.txt"))
-        if not files:
-            print("Документы в корпусе не найдены.")
+    # ------------------------- ОСНОВНОЙ ПАЙПЛАЙН --------------------------- #
+    def run(self) -> None:
+        txt_files = sorted(self.corpus_dir.glob("*.txt"))
+        if not txt_files:
+            logger.warning(
+                "В корпусе %s не найдено *.txt файлов.", self.corpus_dir)
             return
 
         result: Dict[str, List[str]] = {}
-        for f in tqdm(files, desc="Извлечение сущностей"):
-            doc_entities = self._process_file(f)
-            if doc_entities:
-                result.update(doc_entities)
+        for file in tqdm(txt_files, desc="Извлечение сущностей"):
+            res = self._process_file(file)
+            if res:
+                result.update(res)
 
         if not result:
-            print("Не удалось извлечь ни одной сущности.")
+            logger.warning("Не удалось извлечь ни одной сущности.")
             return
 
         tmp = self.output_path.with_suffix(".tmp")
         tmp.write_text(json.dumps(result, ensure_ascii=False,
                        indent=2), encoding="utf-8")
         tmp.replace(self.output_path)
-        print(f"Сущности сохранены в {self.output_path.resolve()}")
+        logger.info("Сущности сохранены в %s", self.output_path.resolve())
 
 
-# ------------------- ЗАПУСК -------------------------------------------------
+# ----------------------------- ЗАПУСК -------------------------------------- #
 if __name__ == "__main__":
     cfg = ConfigLoader(Path(__file__).parent.parent / "config.yml")
-    EntityExtractor(cfg).run_pipeline()
+    EntityExtractor(cfg).run()
